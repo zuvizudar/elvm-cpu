@@ -8,10 +8,10 @@ EsoLang Virtual Machineの略で、C言語で書かれたプログラムをELVM 
 
 ELVM IR　の命令数は20個と、とても少ないので使用を決めました。
 
-# TODO
+## TODO
 
 ELVM IR　→　CPUのオペコード
 
-#　目標
+## 目標
 
 cが動いてvgaで出力できるfpga
