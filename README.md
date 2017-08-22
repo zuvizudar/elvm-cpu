@@ -12,10 +12,6 @@ ELVM IR　の命令数は20個と、とても少ないので使用を決めま�
 
 ELVM IR　→　CPUのオペコード
 
-## 目標
-
-cが動いてvgaで出力できるfpga
-
 ## 参考
 
 https://github.com/shinh/elvm
