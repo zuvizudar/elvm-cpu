@@ -34,7 +34,10 @@ module cpu(clk,btn,led);
 	always @(posedge clk)begin
 				case(op)
 					5'b00000:begin //mov
-						register[rd_p]<=register[rs_p];
+						if(is_sorce_im==1'b0)
+							register[rd_p]<=register[rs_p];
+						else
+							register[rd_p]<=im;
 					end
 					5'b00001:begin //add
 						if(is_sorce_im==1'b0)//reg+reg
@@ -54,7 +57,7 @@ module cpu(clk,btn,led);
 					end
 					5'b00101:begin//putc
 						//out<=register[rd_p];
-						$display("%c",register[rs_p]);									
+						$display("%c",register[rd_p]);									
 					end
 					/*6'b000110:begin//exit
 							;
