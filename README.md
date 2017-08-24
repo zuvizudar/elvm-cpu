@@ -14,7 +14,7 @@ ELVM IR　→　CPUのオペコード
 
 ## メモ
 
- | Register | name  |  num   |
+ |Register[]| name  |  num   |
  |----------|-------|--------|
  | 0        |   A   |  000   |
  | 1        |   B   |  001   |
