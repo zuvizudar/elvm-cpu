@@ -27,7 +27,7 @@ im...24bitにする
  | 4        |   SP  |  100   |
  | 5        |   DP  |  101   |
 
-is_sorce_im..ibit
+is_sorce_im..1bit
 
 op...5bit
 
