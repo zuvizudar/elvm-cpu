@@ -12,6 +12,10 @@ ELVM IR　の命令数は20個と、とても少ないので使用を決めま�
 
 ELVM IR　→　CPUのオペコード
 
+im...24bitにする
+
+負数をどうするか
+
 ## メモ
 
  |Register[]| name  |  num   |
@@ -23,7 +27,15 @@ ELVM IR　→　CPUのオペコード
  | 4        |   SP  |  100   |
  | 5        |   DP  |  101   |
 
+is_sorce_im..ibit
 
+op...5bit
+
+rs...3bit
+
+rd...3bit
+
+im...24bitは必要
 
 ## 参考
 
