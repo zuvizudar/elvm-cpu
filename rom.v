@@ -1,16 +1,15 @@
-module rom(dout, addr);
-	output [23:0] dout;
+module rom_out(dout, addr);
+	output [36:0] dout;
 	input [7:0] addr;
-	integer i;
-	reg[23:0] mem[127:0];
+	reg[36:0] mem[256:0];
 	initial begin
-	/*	mem[8'b00000000]=24'b1_00001_000_000_000001000001;		//add
-		mem[8'b00000001]=24'b1_00001_000_000_000000000001;		//add
-		mem[8'b00000010]=24'b0_00101_000_000_000000000000;  //outs
+		/*mem[8'b00000000]=37'b1_00001_000_000_0_000000000000000001000001;		//add
+		mem[8'b00000001]=37'b1_00001_000_000_0_000000000000000000000001;		//add
+		mem[8'b00000010]=37'b0_00101_000_000_0_000000000000000000000000;  //outs
 	*/
- 		$readmemh("mem.ecpu",mem);
+ 		$readmemb("/home/ryuji/Dropbox/elvm-cpu/rom.ecpu",mem);
+		//$display("%37b",mem[0]);
 	end
-	
-
+	//rom memory(dout,addr,mem);
 	assign dout = mem[addr];
 endmodule

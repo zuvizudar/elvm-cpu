@@ -5,31 +5,31 @@ module cpu(clk,btn,led);
 	
 	wire [4:0] op;
 	wire[2:0] rd_p,rs_p;
-	wire[11:0] im;
-	wire [3:0] nbtn;
+	wire[23:0] im;
+	//wire [3:0] nbtn;
 	wire is_sorce_im;
-	wire [23:0] dout;
+	wire is_negative_num;
+	wire [36:0] dout;
 	reg [7:0]addr=8'b00000000;
-	assign nbtn=~btn;
+	//assign nbtn=~btn;
 
-	reg[23:0]register[5:0];//A,B,C,D,SP,BP;
-	reg[23:0]out=24'b000000000000000000000000;
+	reg[36:0]register[5:0];//A,B,C,D,SP,BP;
+	reg[36:0]out=37'h0000;
 	reg c_flag=1'b0;
-	reg[23:0] data_mem[23:0];
+	reg[36:0] data_mem[36:0];
 	integer i;
 	initial begin
 		for(i=1'b0;i<8'h1111;i=i+1)
-			data_mem[i]=24'h0000;
+			data_mem[i]=37'h0000;
 	
 	
 		for(i=1'b0;i<6;i=i+1'b1)
-			register[i]=1'b0;
+			register[i]=37'h0000;
 
 	end
 	
-	rom memory(dout,addr);
-	
-	decoder decode(clk,dout,is_sorce_im,op,rd_p,rs_p,im);
+	rom_out rom(dout,addr);
+	decoder decode(clk,dout,is_sorce_im,op,rd_p,rs_p,is_negative_num,im);
 			
 	always @(posedge clk)begin
 				case(op)
@@ -118,8 +118,9 @@ module cpu(clk,btn,led);
 					end
 					default:;
 		endcase
-		if(op<5'b01000)
+		if(op<5'b01000)begin
 			addr<=addr+1;
+		end
 	end
 
 endmodule 
