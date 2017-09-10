@@ -6,12 +6,10 @@ module cpu(clk,btn,led);
 	wire [4:0] op;
 	wire[2:0] rd_p,rs_p;
 	wire[23:0] im;
-	//wire [3:0] nbtn;
 	wire is_sorce_im;
 	wire is_negative_num;
 	wire [36:0] dout;
 	reg [7:0]addr=8'b00000000;
-	//assign nbtn=~btn;
 
 	reg[36:0]register[5:0];//A,B,C,D,SP,BP;
 	reg[36:0]out=37'h0000;
