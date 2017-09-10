@@ -7,9 +7,20 @@
 EsoLang Virtual Machineの略で、C言語で書かれたプログラムをELVM IRという中間形式に変換した後に、それを元に多言語にトランスパイルするものです。  
 ELVM IR　の命令数は20個と、とても少ないので使用を決めました。
 
+## ファイルの説明
+cpu.v,decode.v,rom.v ----- cpu本体  
+cpu_tb.v ----------------- テストベンチ  
+ecpu.c ------------------- ELVMのバックエンド  
+rom.ecpu ----------------- ROM(ecpu.cとchange.cで手に入る)  
+change.cpp --------------- ROMファイルを整える.  
+
+
+
 ## TODO
 
-ELVM IR　→　CPUのオペコード  
+
+## DONE
+DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...24bitにする  
 DONE:負数をどうするか
 
