@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include<string.h>
+
 using namespace std;
 void split(void);
 void char_to_int(vector<char> str);
