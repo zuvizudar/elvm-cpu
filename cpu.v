@@ -16,10 +16,10 @@ module cpu(clk,btn,led);
 	reg[36:0]register[5:0];//A,B,C,D,SP,BP;
 	reg[36:0]out=37'h0000;
 	reg c_flag=1'b0;
-	reg[36:0] data_mem[36:0];
+	reg[36:0] data_mem[31:0];
 	integer i;
 	initial begin
-		for(i=1'b0;i<8'h1111;i=i+1)
+		for(i=1'b0;i<37'h1111;i=i+1)
 			data_mem[i]=37'h0000;
 	
 	
