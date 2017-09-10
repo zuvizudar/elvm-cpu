@@ -17,7 +17,7 @@ change.cpp --------------- ROMファイルを整える.
 
 
 ## TODO
-
+	今はjmp命令とか対応していないのでループとかはできない。putcharで一文字出力できる事は確認済み
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
