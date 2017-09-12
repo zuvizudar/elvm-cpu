@@ -1,6 +1,6 @@
 ## 概要
 
-24bitCPU
+24bitCPU→37bitCPU(現在)
 
 ## ELVMとは
 
