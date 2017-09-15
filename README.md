@@ -18,7 +18,12 @@ change.cpp --------------- ROMファイルを整える.
 
 ## TODO
 今はjmp命令とか対応していないのでループとかはできない。putcharで一文字出力できる事は確認済み  
-メモリの添字は24bit使いたいので、store dst,imにしよう。
+メモリの添字は24bit使いたいので、store dst,imにしよう。→メモリの添字8bitまで。dst8bitに拡張。  
+data_mem[256]にカウンタ？  
+store data_mem[rd_p]<=register[rs_p]
+load register[rs_p]<=data_mem[data_mem[rd_p]](rd_pは1111111)
+
+
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
