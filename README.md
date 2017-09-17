@@ -1,6 +1,9 @@
 ## 概要
 
-24bitCPU→ 42bitCPU(現在)
+24bitCPU→ 42bitCPU(現在)  
+cをfpgaで動かそう!  
+c → elvm ir → elvm-cpuの命令
+もっと言えばcへのコンパイラはいっぱいあるので実質色々動く(brainfuck(要検証))  
 
 ## ELVMとは
 
