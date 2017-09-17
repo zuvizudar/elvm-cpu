@@ -24,7 +24,8 @@ change.cpp --------------- ROMファイルを整える.
 g++ change2.cpp -o change  
 change >hello.rom
 ## TODO
-	hello,worldが出来た！imを8bitに戻す。
+	hello,worldが出来た！imを8bitに戻す。  
+	rs232で画面出力とかしたい。。
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
