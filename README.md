@@ -1,6 +1,6 @@
 ## 概要
 
-24bitCPU→37bitCPU(現在)
+24bitCPU→ 42bitCPU(現在)
 
 ## ELVMとは
 
@@ -14,21 +14,14 @@ ecpu.c ------------------- ELVMのバックエンド
 rom.ecpu ----------------- ROM(ecpu.cとchange.cで手に入る)  
 change.cpp --------------- ROMファイルを整える.  
 
+# how to
 
+./out/8cc -S -I. -Ilibc -o hello.eir hello.c  
+./out/elc -ecpu hello.eir > hello.ecpu  
 
 ## TODO
-<<<<<<< HEAD
-	hello,worldが出来た！
-=======
-今はjmp命令とか対応していないのでループとかはできない。putcharで一文字出力できる事は確認済み  
-メモリの添字は24bit使いたいので、store dst,imにしよう。→メモリの添字8bitまで。dst8bitに拡張。  
-data_mem[256]にカウンタ？  
-store data_mem[rd_p]<=register[rs_p]
-load register[rs_p]<=data_mem[data_mem[rd_p]](rd_pは1111111)
+	hello,worldが出来た！imを8bitに戻す。
 
-
-
->>>>>>> 30e948e41d35b3721e83ea5064a32574cb370206
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...24bitにする  
@@ -72,7 +65,7 @@ is_sorce_im..1bit
 op...5bit  
 rs...3bit  
 rd...3bit  
-im...24bitは必要  
+im...24bitは必要  (8bitでよい)
 
 ## 参考
 
