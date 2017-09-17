@@ -1,16 +1,36 @@
 #include <ir/ir.h>
 #include <target/util.h>
-int d2b(int decimal){
-	int binary=0;
-	int base=1;
+#include<string.h>
+long long d2b(int decimal){
+	long long  binary=0;
+	long long  base=1;
 	while(decimal>0){
 		binary+=(decimal%2)*base;
 		decimal/=2;
 		base*=10;
 	}
-	return binary;
-}
 
+	return binary;
+}/*
+long long GetDigit(long long num){
+    long long digit=0;
+    while(num!=0){
+        num /= 10;
+        digit++;
+    }
+    return digit;
+}
+char *fill_zero(long long num,int need_zero_num){
+	int num_len=GetDigit(num);
+	char s[num_len];
+	sprintf(s,"%lld",num);
+	char zero[need_zero_num-num_len];
+	for(int i=0;i<need_zero_num-num_len;i++){
+		zero[i]='0';	
+	}
+	strcat(s,zero);
+	return s;
+}*/
 static const char* reg_names_ecpu[]={
 	"000","001","010","011","100","101"
 };
@@ -73,7 +93,7 @@ static void ecpu_emit_inst(Inst* inst) {
 			emit_line("0_00000_%s_%s",reg_names_ecpu[inst->dst.reg],reg_names_ecpu[inst->src.reg]);
 		else if(inst->src.type==IMM){
 			if(inst->src.imm>=0)
-				emit_line("1_00000_%s_000_0_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);
+				emit_line("1_00000_00000%s_000_0_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);
 			else
 				emit_line("1_00000_%s_000_1_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);
 		}
@@ -91,7 +111,7 @@ static void ecpu_emit_inst(Inst* inst) {
 		}
 		else if(inst->src.type==IMM){
 			if(inst->src.imm>=0)
-	    	emit_line("1_00001_%s_000_0_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);		
+	    	emit_line("1_00001_00000%s_000_0_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);		
 			else
 	    	emit_line("1_00001_%s_000_1_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);		
 		}
@@ -124,7 +144,7 @@ static void ecpu_emit_inst(Inst* inst) {
   case LOAD:
   //  emit_line("%s = mem[%s];", reg_names[inst->dst.reg], src_str(inst));
 		if(inst->src.type==REG)
-			emit_line("0_00011_%s_%s",reg_names_ecpu[inst->src.reg],reg_names_ecpu[inst->dst.reg]);
+			emit_line("0_00011_%s_%s",reg_names_ecpu[inst->dst.reg],reg_names_ecpu[inst->src.reg]);
 		else if(inst->src.type==IMM)	
 			emit_line("1_00011_%s_%d",reg_names_ecpu[inst->dst.reg],inst->src.imm);
   break;
@@ -185,6 +205,13 @@ static void ecpu_emit_inst(Inst* inst) {
 
 void target_ecpu(Module* module) {
   ecpu_init_state();
+Data* data = module->data;
+  for (int mp = 0; data; data = data->next, mp++) {
+    if (data->v) {
+      //emit_line("mem[%d] = %d;", mp, data->v);
+			emit_line("1_00100_%d_000_0_%d",d2b(mp),data->v);
+    }
+  }
 
   int num_funcs = emit_chunked_main_loop(module->text,
                                          ecpu_emit_func_prologue,
@@ -195,14 +222,8 @@ void target_ecpu(Module* module) {
 #ifdef disuse	
   emit_line("int main() {");
   inc_indent();
-
-  Data* data = module->data;
-  for (int mp = 0; data; data = data->next, mp++) {
-    if (data->v) {
-      emit_line("mem[%d] = %d;", mp, data->v);
-    }
-  }
-
+#endif
+  #ifdef disuse
   emit_line("");
   emit_line("while (1) {");
   inc_indent();

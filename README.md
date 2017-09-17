@@ -17,12 +17,12 @@ change.cpp --------------- ROMファイルを整える.
 
 
 ## TODO
-	今はjmp命令とか対応していないのでループとかはできない。putcharで一文字出力できる事は確認済み
-
+	hello,worldが出来た！
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...24bitにする  
 DONE:負数をどうするか
+DONE:jmp
 
 ## メモ
 

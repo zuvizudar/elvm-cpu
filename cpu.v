@@ -4,25 +4,28 @@ module cpu(clk,btn,led);
 	output[3:0] led;
 	
 	wire [4:0] op;
-	wire[2:0] rd_p,rs_p;
+	wire[2:0] rs_p;
+	wire[7:0] rd_p;
 	wire[23:0] im;
+	//wire [3:0] nbtn;
 	wire is_sorce_im;
 	wire is_negative_num;
-	wire [36:0] dout;
+	wire [41:0] dout;
 	reg [7:0]addr=8'b00000000;
+	//assign nbtn=~btn;
 
-	reg[36:0]register[5:0];//A,B,C,D,SP,BP;
-	reg[36:0]out=37'h0000;
+	reg[41:0]register[5:0];//A,B,C,D,SP,BP;
+	reg[41:0]out=42'h00000;
 	reg c_flag=1'b0;
-	reg[36:0] data_mem[31:0];
+	reg[41:0] data_mem[255:0];
 	integer i;
 	initial begin
-		for(i=1'b0;i<37'h1111;i=i+1)
-			data_mem[i]=37'h0000;
+		for(i=1'b0;i<256;i=i+1'b1)
+			data_mem[i]=42'h0000;
 	
 	
 		for(i=1'b0;i<6;i=i+1'b1)
-			register[i]=37'h0000;
+			register[i]=42'h0000;
 
 	end
 	
@@ -47,11 +50,20 @@ module cpu(clk,btn,led);
 						register[rd_p]<=register[rd_p]-register[rs_p];
 					end
 					
-					5'b00011:begin//load
-						register[rd_p]<=data_mem[register[rs_p]];
+					5'b00011:begin//load	
+						if(is_sorce_im==1'b0)		
+							register[rd_p]<=data_mem[register[rs_p]];
+						else
+							register[rs_p]<=data_mem[data_mem[rd_p]];
+						//register[rs_p]<=data_mem[rd_p];
+						//register[rs_p]<=data_mem[rd_p];
 					end
 					5'b00100:begin//store
-						data_mem[register[rd_p]]<=register[rs_p];
+						//data_mem[register[rd_p]]<=register[rs_p];
+						if(is_sorce_im==1'b0)
+							data_mem[register[rs_p]]<=register[rd_p];
+						else
+							data_mem[rd_p]<=im;
 					end
 					5'b00101:begin//putc
 						//out<=register[rd_p];
