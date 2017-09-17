@@ -16,7 +16,7 @@ module rom_out(dout, addr);
 		*/
  		//$readmemb("/home/ryuji/Dropbox/elvm-cpu/rom.ecpu",mem);
 		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/hello_rom.txt",mem);
-		$readmemb("(place)/hello.ecpu",mem);
+		$readmemb("(place)/hello.rom",mem);
 
 	end
 	//rom memory(dout,addr,mem);
