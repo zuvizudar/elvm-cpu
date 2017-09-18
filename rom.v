@@ -14,8 +14,7 @@ module rom_out(dout, addr);
 		mem[8'b00000110]=42'b1_00011_11111111_000_0_000000000000000000000000;	//load
 		mem[8'b00000111]=42'b0_00101_00000000_000_0_000000000000000000000000;  //outs
 		*/
- 		//$readmemb("/home/ryuji/Dropbox/elvm-cpu/rom.ecpu",mem);
-		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/hello_rom.txt",mem);
+ 		
 		$readmemb("(place)/hello.rom",mem);
 
 	end
