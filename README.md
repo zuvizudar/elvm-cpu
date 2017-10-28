@@ -28,13 +28,16 @@ g++ change2.cpp -o change
 change >hello.rom
 ## TODO
 	hello,worldが出来た！imを8bitに戻す。  
-	rs232で画面出力とかしたい。。
+	rs232で画面出力とかしたい。。  
+	jmpが上手く行っていない  
+	色々できていない。
+
+
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...24bitにする  
-DONE:負数をどうするか
-DONE:jmp
+DONE:負数をどうするか  
 
 ## メモ
 
