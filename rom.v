@@ -15,8 +15,8 @@ module rom_out(dout, addr);
 		mem[8'b00000111]=42'b0_00101_00000000_000_0_000000000000000000000000;  //outs
 		*/
  		
+		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/af2.txt",mem);
 		$readmemb("(絶対パス)/hello.rom",mem);
-		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/hello2.rom",mem);
 	end
 	//rom memory(dout,addr,mem);
 	assign dout = mem[addr];

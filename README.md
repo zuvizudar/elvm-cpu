@@ -29,8 +29,7 @@ change >hello.rom
 ## TODO
 	hello,worldが出来た! (?) 
 	rs232で画面出力とかしたい。。  
-	jmpが上手く行っていない  
-	色々できていない。。
+	jmpでまだ到達していないlabelに飛べない。これを修正すれば完成
 
 
 
@@ -74,9 +73,10 @@ DONE:負数をどうするか
  
 is_sorce_im..1bit  
 op...5bit  
-rs...3bit  
-rd...3bit  
-im...24bitは必要  (8bitでよい)
+rd...8bit  
+rs...3bit
+is_negative_num...1bit  
+im...8bit
 
 ## 参考
 

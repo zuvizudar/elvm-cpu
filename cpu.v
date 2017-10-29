@@ -14,10 +14,11 @@ module cpu(clk,btn,led);
 	reg [7:0]addr=8'b00000000;
 	//assign nbtn=~btn;
 
-	reg[25:0]register[5:0];//A,B,C,D,SP,BP;
+	reg[8:0]register[5:0];//A,B,C,D,SP,BP; 桁溢れ対策に9bitにしている
 	reg[25:0]out=26'h00000;
 	reg c_flag=1'b0;
-	reg[25:0] data_mem[255:0];
+	reg[8:0] data_mem[255:0];
+	reg[7:0]label[5:0];
 	integer i;
 	initial begin
 		for(i=1'b0;i<256;i=i+1'b1)
@@ -26,6 +27,9 @@ module cpu(clk,btn,led);
 	
 		for(i=1'b0;i<6;i=i+1'b1)
 			register[i]=26'h0000;
+		
+		for(i=1'b0;i<7;i=i+1'b1)
+			label[i]=8'b00000000;
 
 	end
 	
@@ -42,12 +46,15 @@ module cpu(clk,btn,led);
 					end
 					5'b00001:begin //add
 						if(is_sorce_im==1'b0)//reg+reg
-							register[rd_p]<=register[rd_p]+register[rs_p];
+							register[rd_p]<=(register[rd_p]+register[rs_p])&9'b011111111;
 						else//reg+im
-							register[rd_p]<=register[rd_p]+im;
+							register[rd_p]<=(register[rd_p]+im)&9'b011111111;
 					end
 					5'b00010:begin //sub
-						register[rd_p]<=register[rd_p]-register[rs_p];
+						if(is_sorce_im==1'b0)
+							register[rd_p]<=(register[rd_p]-register[rs_p])&9'b011111111;
+						else
+							register[rd_p]<=(register[rd_p]-im)&9'b011111111;
 					end
 					
 					5'b00011:begin//load	
@@ -93,42 +100,45 @@ module cpu(clk,btn,led);
 					end
 				
 					5'b01110:begin//jeq
-						if(register[rd_p]==register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]==register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 					5'b01111:begin//jne
-						if(register[rd_p]!=register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]!=register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 					5'b10000:begin//jlt
-						if(register[rd_p]<register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]<register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 					5'b10001:begin//jgt
-						if(register[rd_p]>register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]>register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 
 					5'b10010:begin//jle
-						if(register[rd_p]<=register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]<=register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 					5'b10011:begin//jge
-						if(register[rd_p]>=register[rs_p])begin
-							addr<=im;
+						if(register[rs_p]>=register[rd_p])begin
+							addr<=label[im];
 						end
 					end
 					5'b10100:begin//jmp
-							addr<=im;
+							addr<=label[im];
+					end
+					5'b10101:begin//label_memo
+						label[rd_p]=addr+1'b1; //addrをメモ
 					end
 					default:;
 		endcase
-		if(op<5'b01000)begin
+		if(op<5'b01000||op>5'b10100)begin
 			addr<=addr+1;
 		end
 	end
