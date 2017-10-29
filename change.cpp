@@ -14,7 +14,7 @@ const int Im_num=8;
 const int OP_place=1,RD_place=2,RS_place=3,Is_sorce_im_place=4,IM_place=5;
 
 int main(){
-	if((fp=fopen("nafmo.ecpu","r"))==NULL){
+	if((fp=fopen("hello.ecpu","r"))==NULL){
 		printf("file open error\n");
 		exit(EXIT_FAILURE);
 	}

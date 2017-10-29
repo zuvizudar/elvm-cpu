@@ -21,11 +21,11 @@ change.cpp --------------- ROMファイルを整える.
 ![2017-09-17 16 24 47](https://user-images.githubusercontent.com/21309141/30520859-e19e6bf8-9bf0-11e7-87d2-2f23404c5cb6.jpg)
 
 # how to
-
+僕のrepositoriesにあるelvmのforkをcloneしてmake 
 ./out/8cc -S -I. -Ilibc -o hello.eir hello.c  
 ./out/elc -ecpu hello.eir > hello.ecpu  
 g++ change2.cpp -o change  
-change >hello.rom
+change > hello.rom
 ## TODO
 	hello,worldが出来た! 
 	rs232で画面出力とかしたい。。  
