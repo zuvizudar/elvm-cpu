@@ -1,6 +1,8 @@
 #include <ir/ir.h>
 #include <target/util.h>
 #include<string.h>
+int ecpu_label[31];
+int ecpu_cnt;
 long long d2b(int decimal){
 	long long  binary=0;
 	long long  base=1;
@@ -11,29 +13,44 @@ long long d2b(int decimal){
 	}
 
 	return binary;
-}/*
-long long GetDigit(long long num){
-    long long digit=0;
-    while(num!=0){
-        num /= 10;
-        digit++;
-    }
-    return digit;
 }
-char *fill_zero(long long num,int need_zero_num){
-	int num_len=GetDigit(num);
-	char s[num_len];
-	sprintf(s,"%lld",num);
-	char zero[need_zero_num-num_len];
-	for(int i=0;i<need_zero_num-num_len;i++){
-		zero[i]='0';	
-	}
-	strcat(s,zero);
-	return s;
-}*/
 static const char* reg_names_ecpu[]={
 	"000","001","010","011","100","101"
 };
+int label_ok=0,label_cnt=0;
+const char* ecpu_cmp_str(Inst* inst) {
+  int op = normalize_cond(inst->op, 0);
+  const char* op_str;
+  switch (op) {
+    case JEQ:
+      op_str = "01110"; break;
+    case JNE:
+      op_str = "01111"; break;
+    case JLT:
+      op_str = "10000"; break;
+    case JGT:
+      op_str = "10001"; break;
+    case JLE:
+      op_str = "10010"; break;
+    case JGE:
+      op_str = "10011"; break;
+    case JMP:
+      op_str = "10100"; break;
+    default:
+      error("oops");
+  }
+  return op_str;
+}
+const char* ecpu_value_str(Value* v) {
+  if (v->type == REG) {
+    return reg_names_ecpu[v->reg];
+  } else if (v->type == IMM) {
+    return format("%d",d2b(v->imm));
+  } else {
+    error("invalid value");
+  }
+}
+
 static void ecpu_init_state(void) {
 #ifdef disuse
   emit_line("#include <stdio.h>");
@@ -75,7 +92,17 @@ static void ecpu_emit_func_epilogue(void) {
 }
 
 static void ecpu_emit_pc_change(int pc) {
-	pc++;
+	//emit_line("hey %d  %d",pc,ecpu_cnt);
+	//ecpu_label[pc]=ecpu_cnt-1;
+	if(label_ok==0){
+		ecpu_cnt++;
+		label_cnt++;
+		emit_line("0_10101_%d_000_0_%d",d2b(pc),ecpu_cnt);
+	}
+	else{
+		emit_line("1_10101_00000000_000_0_00000000");//dummy
+	}
+	//emit_line("%d,%d",pc,ecpu_label[pc]);
 #ifdef disuse
   emit_line("break;");
   emit_line("");
@@ -85,6 +112,8 @@ static void ecpu_emit_pc_change(int pc) {
 #endif
 }
 static void ecpu_emit_inst(Inst* inst) {
+	ecpu_cnt++;
+	if(label_ok==0)return;
   switch (inst->op) {
   case MOV:
     //emit_line("%s = %s;", reg_names[inst->dst.reg], src_str(inst));
@@ -181,10 +210,11 @@ static void ecpu_emit_inst(Inst* inst) {
   case GT:
   case LE:
   case GE:
+	#ifdef disuse
     emit_line("%s = %s;",
               reg_names[inst->dst.reg], cmp_str(inst, "1"));
     break;
-
+	#endif
   case JEQ:
   case JNE:
   case JLT:
@@ -192,6 +222,11 @@ static void ecpu_emit_inst(Inst* inst) {
   case JLE:
   case JGE:
   case JMP:
+		//emit_line("0_%s_%s_%s_0_%s",ecpu_cmp_str(inst),reg_names_ecpu[inst->dst.reg],ecpu_value_str(&inst->src),value_str(&inst->jmp));	
+		if(inst->src.type==IMM)
+			emit_line("1_%s_%s_%s_0_%s",ecpu_cmp_str(inst),ecpu_value_str(&inst->src),reg_names_ecpu[inst->dst.reg],value_str(&inst->jmp));	
+		else
+			emit_line("1_%s_%s_%s_0_%s",ecpu_cmp_str(inst),ecpu_value_str(&inst->src),reg_names_ecpu[inst->dst.reg],value_str(&inst->jmp));	
 	#ifdef disuse
     emit_line("if (%s) pc = %s - 1;",
               cmp_str(inst, "1"), value_str(&inst->jmp));
@@ -207,13 +242,21 @@ void target_ecpu(Module* module) {
   ecpu_init_state();
 Data* data = module->data;
   for (int mp = 0; data; data = data->next, mp++) {
+	  ecpu_cnt++;
     if (data->v) {
       //emit_line("mem[%d] = %d;", mp, data->v);
 			emit_line("1_00100_%d_000_0_%d",d2b(mp),data->v);
     }
   }
-
   int num_funcs = emit_chunked_main_loop(module->text,
+                                         ecpu_emit_func_prologue,
+                                         ecpu_emit_func_epilogue,
+                                         ecpu_emit_pc_change,
+                                         ecpu_emit_inst);
+  label_ok=1;
+	emit_line("0_10110_00000000_000_0_%d",label_cnt);
+	emit_line("");
+   num_funcs = emit_chunked_main_loop(module->text,
                                          ecpu_emit_func_prologue,
                                          ecpu_emit_func_epilogue,
                                          ecpu_emit_pc_change,
