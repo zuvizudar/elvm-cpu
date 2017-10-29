@@ -14,7 +14,7 @@ ELVM IR　の命令数は20個と、とても少ないので使用を決めま�
 cpu.v,decode.v,rom.v ----- cpu本体  
 cpu_tb.v ----------------- テストベンチ  
 ecpu.c ------------------- ELVMのバックエンド  
-rom.ecpu ----------------- ROM(ecpu.cとchange.cで手に入る)  
+hello.rom ----------------- ROM(ecpu.cとchange.cで手に入る)  
 change.cpp --------------- ROMファイルを整える.  
 
 ## こんな感じ
