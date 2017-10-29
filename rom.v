@@ -1,7 +1,7 @@
 module rom_out(dout, addr);
-	output [41:0] dout;
+	output [25:0] dout;
 	input [7:0] addr;
-	reg[41:0] mem[256:0];
+	reg[25:0] mem[256:0];
 	initial begin
 	  /* mem[8'b00000000]=42'b1_00100_00000000_000_0_000000000000000001000011;	
 		mem[8'b00000001]=42'b1_00100_00000001_000_0_000000000000000001000100;	//store
@@ -15,8 +15,8 @@ module rom_out(dout, addr);
 		mem[8'b00000111]=42'b0_00101_00000000_000_0_000000000000000000000000;  //outs
 		*/
  		
-		$readmemb("(place)/hello.rom",mem);
-
+		$readmemb("(絶対パス)/hello.rom",mem);
+		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/hello2.rom",mem);
 	end
 	//rom memory(dout,addr,mem);
 	assign dout = mem[addr];

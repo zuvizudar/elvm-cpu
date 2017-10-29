@@ -1,6 +1,6 @@
 ## 概要
 
-24bitCPU→ 42bitCPU(現在)  
+24bitCPU→ 42bitCPU→ 26bitCPU(現在)  
 cをfpgaで動かそう!  
 c → elvm ir → elvm-cpuの命令　　
 もっと言えばcへのコンパイラはいっぱいあるので実質色々動く(brainfuckとか(要検証))  
@@ -27,16 +27,16 @@ change.cpp --------------- ROMファイルを整える.
 g++ change2.cpp -o change  
 change >hello.rom
 ## TODO
-	hello,worldが出来た！imを8bitに戻す。  
+	hello,worldが出来た! (?) 
 	rs232で画面出力とかしたい。。  
 	jmpが上手く行っていない  
-	色々できていない。
+	色々できていない。。
 
 
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
-DONE:im...24bitにする  
+DONE:im...8bitにする  
 DONE:負数をどうするか  
 
 ## メモ

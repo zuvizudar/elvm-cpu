@@ -6,26 +6,26 @@ module cpu(clk,btn,led);
 	wire [4:0] op;
 	wire[2:0] rs_p;
 	wire[7:0] rd_p;
-	wire[23:0] im;
+	wire[7:0] im;
 	//wire [3:0] nbtn;
 	wire is_sorce_im;
 	wire is_negative_num;
-	wire [41:0] dout;
+	wire [25:0] dout;
 	reg [7:0]addr=8'b00000000;
 	//assign nbtn=~btn;
 
-	reg[41:0]register[5:0];//A,B,C,D,SP,BP;
-	reg[41:0]out=42'h00000;
+	reg[25:0]register[5:0];//A,B,C,D,SP,BP;
+	reg[25:0]out=26'h00000;
 	reg c_flag=1'b0;
-	reg[41:0] data_mem[255:0];
+	reg[25:0] data_mem[255:0];
 	integer i;
 	initial begin
 		for(i=1'b0;i<256;i=i+1'b1)
-			data_mem[i]=42'h0000;
+			data_mem[i]=26'h0000;
 	
 	
 		for(i=1'b0;i<6;i=i+1'b1)
-			register[i]=42'h0000;
+			register[i]=26'h0000;
 
 	end
 	
