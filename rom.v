@@ -16,7 +16,7 @@ module rom_out(dout, addr);
 		*/
  		
 		//$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/af2.txt",mem);
-		$readmemb("(絶対パス)/hello.rom",mem);
+		$readmemb("C:/Users/ryuji/Dropbox/elvm-cpu/nafmo.rom",mem);
 	end
 	//rom memory(dout,addr,mem);
 	assign dout = mem[addr];

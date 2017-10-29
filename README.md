@@ -27,16 +27,15 @@ change.cpp --------------- ROMファイルを整える.
 g++ change2.cpp -o change  
 change >hello.rom
 ## TODO
-	hello,worldが出来た! (?) 
+	hello,worldが出来た! 
 	rs232で画面出力とかしたい。。  
-	jmpでまだ到達していないlabelに飛べない。これを修正すれば完成
-
 
 
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...8bitにする  
 DONE:負数をどうするか  
+DONE:jmpでまだ到達していないlabelに飛べない。これを修正すれば完成
 
 ## メモ
 

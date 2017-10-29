@@ -8,17 +8,18 @@ string change(string str);
 
 FILE *fp;
 char s[256];
-const string Zero ="_0_000000000000000000000000";
+const string Zero ="_0_00000000";
 const string Max_num="255\n";
-const int Im_num=24;
+const int Im_num=8;
 const int OP_place=1,RD_place=2,RS_place=3,Is_sorce_im_place=4,IM_place=5;
 
 int main(){
-	if((fp=fopen("tmp.txt","r"))==NULL){
+	if((fp=fopen("nafmo.ecpu","r"))==NULL){
 		printf("file open error\n");
 		exit(EXIT_FAILURE);
 	}
 	while(fgets(s,256,fp)!=NULL){
+		if(s[0]<'0'||'9'<s[0])continue;
 		stringstream ss;
 		vector<string>code;
 		string tmp;

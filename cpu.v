@@ -18,7 +18,8 @@ module cpu(clk,btn,led);
 	reg[25:0]out=26'h00000;
 	reg c_flag=1'b0;
 	reg[8:0] data_mem[255:0];
-	reg[7:0]label[5:0];
+	reg[7:0]label[11:0];
+	reg[7:0]label_cnt=8'b00000000;
 	integer i;
 	initial begin
 		for(i=1'b0;i<256;i=i+1'b1)
@@ -28,7 +29,7 @@ module cpu(clk,btn,led);
 		for(i=1'b0;i<6;i=i+1'b1)
 			register[i]=26'h0000;
 		
-		for(i=1'b0;i<7;i=i+1'b1)
+		for(i=1'b0;i<12;i=i+1'b1)
 			label[i]=8'b00000000;
 
 	end
@@ -100,10 +101,21 @@ module cpu(clk,btn,led);
 					end
 				
 					5'b01110:begin//jeq
-						if(register[rs_p]==register[rd_p])begin
-							addr<=label[im];
+						if(is_sorce_im==1'b0)begin
+							if(register[rs_p]==register[rd_p])begin
+								addr<=(label[im]+label_cnt);
+							end
+							else addr<=addr+1;
 						end
+						else begin
+							if(register[rd_p]==rs_p)begin
+								addr<=(label[im]+label_cnt);
+							end
+							else addr<=addr+1;
+						end
+						
 					end
+					
 					5'b01111:begin//jne
 						if(register[rs_p]!=register[rd_p])begin
 							addr<=label[im];
@@ -130,11 +142,17 @@ module cpu(clk,btn,led);
 							addr<=label[im];
 						end
 					end
+					
 					5'b10100:begin//jmp
-							addr<=label[im];
+						addr<=(label[im]+label_cnt);
 					end
+					
 					5'b10101:begin//label_memo
-						label[rd_p]=addr+1'b1; //addrをメモ
+						if(is_sorce_im==1'b0)
+							label[rd_p]=im-1'b1; //addrをメモ
+					end
+					5'b10110:begin//lebel_cnt_memo
+						label_cnt=im;
 					end
 					default:;
 		endcase
