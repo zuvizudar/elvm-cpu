@@ -13,10 +13,10 @@ ELVM IR　の命令数は20個と、とても少ないので使用を決めま�
 https://github.com/shinh/elvm  
 
 ## ファイルの説明
-src.....cpuのコード
-data.....romの遷移
-tool.....romを整えます
-pre......rs232出力を加える前のcpu本体とテストベンチが入ってます
+src.....cpuのコード  
+data.....romの遷移  
+tool.....romを整えます  
+pre......rs232出力を加える前のcpu本体とテストベンチが入ってます  
 
 ## こんな感じ
 ![2017-09-17 16 24 47](https://user-images.githubusercontent.com/21309141/30520859-e19e6bf8-9bf0-11e7-87d2-2f23404c5cb6.jpg)
