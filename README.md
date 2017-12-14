@@ -1,10 +1,10 @@
 ## 概要
 
-24bitCPU→ 42bitCPU→ 26bitCPU(現在)  
+26bitCPU(現在)  
 cをfpgaで動かそう!  
 c → elvm ir → elvm-cpuの命令　　
 もっと言えばcへのコンパイラはいっぱいあるので実質色々動く(brainfuckとか(要検証))  
-とりあえずhello,worldが出来る事は確認しました。
+とりあえずhello,worldが出来る事は確認しました。 
 
 ## ELVMとは
 
@@ -13,11 +13,10 @@ ELVM IR　の命令数は20個と、とても少ないので使用を決めま�
 https://github.com/shinh/elvm  
 
 ## ファイルの説明
-cpu.v,decode.v,rom.v ----- cpu本体  
-cpu_tb.v ----------------- テストベンチ  
-ecpu.c ------------------- ELVMのバックエンド  
-hello.rom ----------------- ROM(ecpu.cとchange.cで手に入る)  
-change.cpp --------------- ROMファイルを整える.  
+src.....cpuのコード
+data.....romの遷移
+tool.....romを整えます
+pre......rs232出力を加える前のcpu本体とテストベンチが入ってます
 
 ## こんな感じ
 ![2017-09-17 16 24 47](https://user-images.githubusercontent.com/21309141/30520859-e19e6bf8-9bf0-11e7-87d2-2f23404c5cb6.jpg)
@@ -27,15 +26,15 @@ https://github.com/zuvizudar/elvm をcloneしてmake
 ./out/8cc -S -I. -Ilibc -o hello.eir hello.c  
 ./out/elc -ecpu hello.eir > hello.ecpu  
 g++ change2.cpp -o change  
-change > hello.rom
+change > hello.rom  
 ## TODO
-	rs232で画面出力とかしたい。。  
-
+	elvm側で終了判定付け足す
 ## DONE
 DONE:ELVM IR　→　CPUのオペコード  
 DONE:im...8bitにする  
 DONE:負数をどうするか  
-DONE:jmpでまだ到達していないlabelに飛べない。これを修正すれば完成
+DONE:jmpでまだ到達していないlabelに飛べない
+DONE:rs232で画面出力とかしたい。。  
 
 ## メモ
 
@@ -71,6 +70,7 @@ DONE:jmpでまだ到達していないlabelに飛べない。これを修正す�
  |  10100   |    jmp    |
  |  10101   | label_memo|
  |	10110	| lebel_cnt |
+ |  11111   |    exit   |
  
 is_sorce_im..1bit  
 op...5bit  
