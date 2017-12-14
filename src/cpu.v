@@ -180,7 +180,7 @@ module cpu(clk,rst,tx,seg,segsel);
 					default:;
 		endcase
 		if(op<5'b01000||op>5'b10100)begin
-			if(addr<80)
+			if(!(op==5'b11111))
 				addr<=addr+1;
 		end
 		if(op!=5'b00101)begin
