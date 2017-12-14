@@ -10,7 +10,7 @@ FILE *fp;
 char s[256];
 
 int main(){
-	if((fp=fopen("hoge.rom","r"))==NULL){
+	if((fp=fopen("hello.rom","r"))==NULL){
 		printf("file open error\n");
 		exit(EXIT_FAILURE);
 	}
