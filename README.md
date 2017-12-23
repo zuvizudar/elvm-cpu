@@ -1,15 +1,10 @@
 ## 概要
 
-26bitCPU(現在)  
-cをfpgaで動かそう!  
+26bitCPU  
 c → elvm ir → elvm-cpuの命令　　
-もっと言えばcへのコンパイラはいっぱいあるので実質色々動く(brainfuckとか(要検証))  
-とりあえずhello,worldが出来る事は確認しました。 
 
 ## ELVMとは
-
 EsoLang Virtual Machineの略で、C言語で書かれたプログラムをELVM IRという中間形式に変換した後に、それを元に多言語にトランスパイルするものです。  
-ELVM IR　の命令数は20個と、とても少ないので使用を決めました。  
 https://github.com/shinh/elvm  
 
 ## ファイルの説明
@@ -21,12 +16,6 @@ pre......rs232出力を加える前のcpu本体とテストベンチが入って
 ## こんな感じ
 ![2017-09-17 16 24 47](https://user-images.githubusercontent.com/21309141/30520859-e19e6bf8-9bf0-11e7-87d2-2f23404c5cb6.jpg)
 
-# how to
-https://github.com/zuvizudar/elvm をcloneしてmake   
-./out/8cc -S -I. -Ilibc -o hello.eir hello.c  
-./out/elc -ecpu hello.eir > hello.ecpu  
-g++ change2.cpp -o change  
-change > hello.rom  
 ## TODO
 	elvm側で終了判定付け足す
 ## DONE
