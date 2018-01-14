@@ -14,7 +14,7 @@ tool.....romを整えます
 pre......rs232出力を加える前のcpu本体とテストベンチが入ってます  
 
 ## こんな感じ
-![2017-09-17 16 24 47](https://user-images.githubusercontent.com/21309141/30520859-e19e6bf8-9bf0-11e7-87d2-2f23404c5cb6.jpg)
+![cpu_demo](https://user-images.githubusercontent.com/21309141/34920018-567ee436-f9af-11e7-98bd-35ed325d0d9f.jpeg)
 
 ## TODO
 	elvm側で終了判定付け足す
